@@ -1,51 +1,53 @@
-#### Imports et définition des variables globales
+'''Compte le nombres de lettres dans un mot'''
 
-# Mandatory for the recursive solution to work on large inputs
+#### Imports et définition des variables globales ###
+
+### Mandatory for the recursive solution to work on large inputs ###
 import sys
 sys.setrecursionlimit(2000)
 
-
-#### Fonctions secondaires
-
+### Fonctions secondaires ###
 
 def artcode_i(s):
-    """retourne la liste de tuples encodant une chaîne de caractères passée en argument selon un algorithme itératif
+    '''Partie itérative'''
 
-    Args:
-        s (str): la chaîne de caractères à encoder
+    if not s:
+        return []
 
-    Returns:
-        list: la liste des tuples (caractère, nombre d'occurences)
-    """
-    
-    # votre code ici
+    result = []
+    current_char = s[0]
+    count = 1
 
-    return [ ]
+    for i in range(1, len(s)):
+        if s[i] == current_char:
+            count += 1
+        else:
+            result.append((current_char, count))
+            current_char = s[i]
+            count = 1
 
+    result.append((current_char, count))
+    return result
 
 def artcode_r(s):
-    """retourne la liste de tuples encodant une chaîne de caractères passée en argument selon un algorithme récursif
+    '''Partie récursive'''
 
-    Args:
-        s (str): la chaîne de caractères à encoder
+    if not s:
+        return []
 
-    Returns:
-        list: la liste des tuples (caractère, nombre d'occurences)
-    """
-    
-    # votre code ici
+    first_char = s[0]
+    count = 1
 
-    # cas de base
-    # recherche nombre de caractères identiques au premier
-    # appel récursif
+    while count < len(s) and s[count] == first_char:
+        count += 1
 
-    return []
-    
+    return [(first_char, count)] + artcode_r(s[count:])
 
-#### Fonction principale
-
+### Fonction principale ###
 
 def main():
+    '''Fonction principale'''
+
     print(artcode_i('MMMMaaacXolloMM'))
     print(artcode_r('MMMMaaacXolloMM'))
 
